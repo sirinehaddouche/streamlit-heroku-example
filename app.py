@@ -1,4 +1,8 @@
 import streamlit as st
+from transformers import pipeline
+
+classifier = pipeline("text-classification",
+                      model='bhadresh-savani/distilbert-base-uncased-emotion', return_all_scores=True)
 
 st.title('Hello World!')
 
@@ -7,5 +11,6 @@ text = form.text_input(label='Enter some text')
 submit_button = form.form_submit_button(label='Submit')
 
 if submit_button:
-    st.subheader('Raw data')
-    st.write({"text": text})
+    prediction = classifier(text)
+    st.subheader('Data')
+    st.write(prediction)
